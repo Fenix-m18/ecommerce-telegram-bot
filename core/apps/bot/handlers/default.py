@@ -10,7 +10,7 @@ from core.apps.bot.loader import bot, dp
 from core.apps.bot.models import TelegramUser
 
 HELP_TEXT = """
-👋 **Вітаємо в MotoHub! 🏍️**
+👋 Вітаємо в MotoHub! 🏍️
 
 Раді бачити вас у нашому боті! Тут ви знайдете все необхідне для свого мотоцикла:
 
@@ -134,5 +134,5 @@ def default_handlers_register():
     dp.register_message_handler(cmd_description, Text(equals='Про нас 📌'))
     dp.register_message_handler(send_all, Text(contains='Broadcast:'))
     dp.register_message_handler(cmd_admin, Text(equals='Адмін 👑'))
-    dp.register_message_handler(cmd_home, Text(equals='Головне меню 🏠'))
+    #dp.register_message_handler(cmd_home, Text(equals='Головне меню 🏠'))
     dp.register_message_handler(cmd_help_admin, Text(equals='Допомога 🔔'))
