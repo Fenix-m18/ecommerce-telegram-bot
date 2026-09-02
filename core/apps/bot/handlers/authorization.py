@@ -253,15 +253,15 @@ def check_users_chat_id(chat_id):
 
 
 def authorization_handlers_register():
-    dp.register_message_handler(command_cancel, Text(equals='Cancel ❌', ignore_case=True), state='*')
-    dp.register_message_handler(process_registration, Text(equals='Sign Up ✌️'), state='*')
+    dp.register_message_handler(command_cancel, Text(equals='Відмінити ❌', ignore_case=True), state='*')
+    dp.register_message_handler(process_registration, Text(equals='Зареєструватися ✌️'), state='*')
     dp.register_message_handler(process_login, state=AuthState.user_login)
     dp.register_message_handler(process_password, state=AuthState.user_password)
     dp.register_message_handler(process_password_2, state=AuthState.user_password_2)
-    dp.register_message_handler(forgot_password, Text(equals='Forgot Password? 🆘'), state='*')
+    dp.register_message_handler(forgot_password, Text(equals='Забули пароль? 🆘'), state='*')
     dp.register_message_handler(process_forgot_password_login, state=ForgotPasswordState.user_login)
     dp.register_message_handler(process_forgot_password_password, state=ForgotPasswordState.user_password)
     dp.register_message_handler(process_forgot_password_password_2, state=ForgotPasswordState.user_password_2)
-    dp.register_message_handler(command_sign_in, Text(equals='Sign In 👋'))
+    dp.register_message_handler(command_sign_in, Text(equals='Увійти 👋'))
     dp.register_message_handler(process_sign_in, state=SignInState.login)
     dp.register_message_handler(process_pass, state=SignInState.password)
