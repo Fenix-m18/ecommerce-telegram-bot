@@ -1,4 +1,4 @@
-from aiogram import types
+From aiogram import types
 from aiogram.dispatcher.filters import Text
 from asgiref.sync import sync_to_async
 
@@ -31,42 +31,24 @@ async def show_categories(message: types.Message):
 
 async def get_products(query):
     elem = query.data.split(':')
-    subcategory_id = elem[1]
-
-    if await subcategory_products_exists(product_subcategory_id=subcategory_id):
+    if await subcategory_products_exists(product_subcategory_id=elem[1]):
         await bot.send_message(
             chat_id=query.message.chat.id,
-            text="Here is the list of products available in this subcategory 👇",
+            text="Here is the list of products available in this subcategor 👇",
         )
-        products = await get_subcategory_products_list(subcategory_id)
-
-        for product in products:
-            description = product.description or ""
-            if len(description) > 900:
-                description = description[:897] + "..."
-
+        async for product in Product.objects.filter(product_subcategory_id=elem[1]):
+            photo_id = product.photo.open('rb').read()
             text = f"Product 🚀: {product.name}\n\n" \
-                   f"Description 💬: {description}\n\n" \
+                   f"Description 💬: {product.description}\n\n" \
                    f"Price 💰: {product.price} USD"
-
-            if product.photo:
-                await bot.send_photo(
-                    chat_id=query.message.chat.id,
-                    photo=product.photo.url,
-                    caption=text
-                )
-            else:
-                await bot.send_message(
-                    chat_id=query.message.chat.id,
-                    text=text
-                )
+            await bot.send_photo(chat_id=query.message.chat.id, photo=photo_id, caption=text)
     else:
         await bot.send_message(
             query.message.chat.id,
             text="Unfortunately, there are no products in this subcategory 🙁",
             reply_markup=markup,
         )
-        
+
 
 async def show_subcategories(query: types.CallbackQuery):
     if sign_in['current_state']:
@@ -123,8 +105,3 @@ def catalog_handlers_register():
     dp.register_message_handler(show_categories, Text(equals='Catalog 🛒'))
     dp.register_callback_query_handler(show_subcategories, category_cb.filter(action='view_categories'))
     dp.register_callback_query_handler(show_products, subcategory_cb.filter(action='view_subcategories'))
-
-@sync_to_async
-def get_subcategory_products_list(subcategory_id):
-    return list(Product.objects.filter(product_subcategory_id=subcategory_id))
-
