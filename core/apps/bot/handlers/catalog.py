@@ -14,17 +14,17 @@ async def show_categories(message: types.Message):
     if sign_in['current_state']:
         if await category_exists():
             await bot.send_message(
-                chat_id=message.chat.id, text="Please choose a category from the list 📂",
+                chat_id=message.chat.id, text="Будь ласка, виберіть категорію зі списку 📂",
                 reply_markup=await get_categories(),
             )
         else:
             await bot.send_message(
-                chat_id=message.chat.id, text="Unfortunately, the administrator hasn't added any categories yet ☹️",
+                chat_id=message.chat.id, text="На жаль, адміністратор ще не додав жодних категорій ☹️",
                 reply_markup=markup,
             )
     else:
         await message.answer(
-            "You are not logged in, please try logging into your profile ‼️",
+            "Ви не увійшли в систему, будь ласка, спробуйте увійти у свій профіль ‼️",
             reply_markup=sign_inup_kb.markup,
         )
 
@@ -34,7 +34,7 @@ async def get_products(query):
     if await subcategory_products_exists(product_subcategory_id=elem[1]):
         await bot.send_message(
             chat_id=query.message.chat.id,
-            text="Here is the list of products available in this subcategor 👇",
+            text="Ось список продуктів, доступних у цій підкатегорії 👇",
         )
         async for product in Product.objects.filter(product_subcategory_id=elem[1]):
             photo_id = product.photo.open('rb').read()
@@ -45,7 +45,7 @@ async def get_products(query):
     else:
         await bot.send_message(
             query.message.chat.id,
-            text="Unfortunately, there are no products in this subcategory 🙁",
+            text="На жаль, у цій підкатегорії немає продуктів 🙁",
             reply_markup=markup,
         )
 
@@ -57,19 +57,19 @@ async def show_subcategories(query: types.CallbackQuery):
             await query.answer(text="SubCategories")
             await bot.send_message(
                 chat_id=query.message.chat.id,
-                text="Please choose a subcategory from the list ☺️",
+                text="Будь ласка, оберіть підкатегорію зі списку ☺️",
                 reply_markup=await get_subcategories(elem[1]),
             )
         else:
             await bot.send_message(
                 chat_id=query.message.chat.id,
-                text="Sorry, there are no products in this category 😔",
+                text="Вибачте, у цій категорії немає товарів 😔",
                 reply_markup=markup,
             )
     else:
         await bot.send_message(
             chat_id=query.message.chat.id,
-            text="You are not logged in, please try logging into your profile ‼️",
+            text="Ви не увійшли в систему, будь ласка, спробуйте увійти у свій профіль ‼️",
             reply_markup=sign_inup_kb.markup,
         )
 
@@ -81,7 +81,7 @@ async def show_products(query: types.CallbackQuery):
     else:
         await bot.send_message(
             chat_id=query.message.chat.id,
-            text="You are not logged in, please try logging into your profile ‼️",
+            text="Ви не увійшли в систему, будь ласка, спробуйте увійти у свій профіль ‼️",
             reply_markup=sign_inup_kb.markup,
         )
 
