@@ -31,43 +31,42 @@ async def show_categories(message: types.Message):
 
 async def get_products(query):
     elem = query.data.split(':')
-    if await subcategory_products_exists(product_subcategory_id=elem[1]):
+    subcategory_id = elem[1]
+
+    if await subcategory_products_exists(product_subcategory_id=subcategory_id):
         await bot.send_message(
             chat_id=query.message.chat.id,
-            text="Here is the list of products available in this subcategor 👇",
+            text="Here is the list of products available in this subcategory 👇",
         )
-        products = await get_subcategory_products_list(elem[1])
+        products = await get_subcategory_products_list(subcategory_id)
 
-for product in products:
-    # 1. Захист від занадто довгого опису (ліміт Telegram 1024 символи)
-    description = product.description or ""
-    if len(description) > 900:
-        description = description[:897] + "..."
+        for product in products:
+            description = product.description or ""
+            if len(description) > 900:
+                description = description[:897] + "..."
 
-    text = f"🚀: {product.name}\n\n" \
-           f"💬: {description}\n\n" \
-           f"Ціна 💰: {product.price} грн"
+            text = f"Product 🚀: {product.name}\n\n" \
+                   f"Description 💬: {description}\n\n" \
+                   f"Price 💰: {product.price} USD"
 
-    # 2. Передаємо URL-адресу Cloudinary замість зчитування локального файлу
-    if product.photo:
-        await bot.send_photo(
-            chat_id=query.message.chat.id, 
-            photo=product.photo.url,  # Telegram сам завантажить фото за посиланням
-            caption=text
-        )
+            if product.photo:
+                await bot.send_photo(
+                    chat_id=query.message.chat.id,
+                    photo=product.photo.url,
+                    caption=text
+                )
+            else:
+                await bot.send_message(
+                    chat_id=query.message.chat.id,
+                    text=text
+                )
     else:
-        # Якщо у товару немає фото
         await bot.send_message(
-            chat_id=query.message.chat.id, 
-            text=text
+            query.message.chat.id,
+            text="Unfortunately, there are no products in this subcategory 🙁",
+            reply_markup=markup,
         )
-else:
-    await bot.send_message(
-        query.message.chat.id,
-        text="Unfortunately, there are no products in this subcategory 🙁",
-        reply_markup=markup,
-    )
-
+        
 
 async def show_subcategories(query: types.CallbackQuery):
     if sign_in['current_state']:
