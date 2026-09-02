@@ -36,12 +36,31 @@ async def get_products(query):
             chat_id=query.message.chat.id,
             text="Here is the list of products available in this subcategor 👇",
         )
-        async for product in Product.objects.filter(product_subcategory_id=elem[1]):
-            photo_id = product.photo.open('rb').read()
-            text = f"Product 🚀: {product.name}\n\n" \
-                   f"Description 💬: {product.description}\n\n" \
-                   f"Price 💰: {product.price} USD"
-            await bot.send_photo(chat_id=query.message.chat.id, photo=photo_id, caption=text)
+        products = await get_subcategory_products_list(elem[1])
+
+for product in products:
+    # 1. Захист від занадто довгого опису (ліміт Telegram 1024 символи)
+    description = product.description or ""
+    if len(description) > 900:
+        description = description[:897] + "..."
+
+    text = f"🚀: {product.name}\n\n" \
+           f"💬: {description}\n\n" \
+           f"Ціна 💰: {product.price} грн"
+
+    # 2. Передаємо URL-адресу Cloudinary замість зчитування локального файлу
+    if product.photo:
+        await bot.send_photo(
+            chat_id=query.message.chat.id, 
+            photo=product.photo.url,  # Telegram сам завантажить фото за посиланням
+            caption=text
+        )
+    else:
+        # Якщо у товару немає фото
+        await bot.send_message(
+            chat_id=query.message.chat.id, 
+            text=text
+        )
     else:
         await bot.send_message(
             query.message.chat.id,
