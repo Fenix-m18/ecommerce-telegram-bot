@@ -127,9 +127,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-
-# Вимикаємо сувору перевірку файлів
+# Стандартне сховище WhiteNoise без стиснення і маніфестів
+STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 WHITENOISE_MANIFEST_STRICT = False
 
 MEDIA_URL = '/media/'
@@ -150,5 +149,3 @@ CLOUDINARY_STORAGE = {
 
 # Вказуємо Django завантажувати всі медіафайли (фото товарів) у Cloudinary
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-WHITENOISE_MANIFEST_STRICT = False
