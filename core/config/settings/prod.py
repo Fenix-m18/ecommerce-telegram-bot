@@ -148,3 +148,4 @@ CLOUDINARY_STORAGE = {
 # Вказуємо Django завантажувати всі медіафайли (фото товарів) у Cloudinary
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
+WHITENOISE_MANIFEST_STRICT = False
