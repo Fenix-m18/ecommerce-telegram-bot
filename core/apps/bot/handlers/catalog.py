@@ -38,9 +38,9 @@ async def get_products(query):
         )
         async for product in Product.objects.filter(product_subcategory_id=elem[1]):
             photo_id = product.photo.open('rb').read()
-            text = f"Product 🚀: {product.name}\n\n" \
-                   f"Description 💬: {product.description}\n\n" \
-                   f"Price 💰: {product.price} USD"
+            text = f"▶️: {product.name}\n\n" \
+                   f"▶️: {product.description}\n\n" \
+                   f"Ціна 💰: {product.price} грн"
             await bot.send_photo(chat_id=query.message.chat.id, photo=photo_id, caption=text)
     else:
         await bot.send_message(
