@@ -10,18 +10,16 @@ from core.apps.bot.loader import bot, dp
 from core.apps.bot.models import TelegramUser
 
 HELP_TEXT = """
-Hello 👋, I’m a bot for selling various products! We have the following commands:
+👋 **Вітаємо в MotoHub! 🏍️**
 
-<b>Help ⭐️</b> - help with bot commands
-<b>Description 📌</> -address, contact details, working hours
-<b>Catalog 🛒</b> - list of products you can buy
-<b>Admin 👑</b> - admin menu
+Раді бачити вас у нашому боті! Тут ви знайдете все необхідне для свого мотоцикла:
 
-But before starting, you need to <b>register or log in</b> to your profile. 
-Click on the <b>Sign Up ✌️</b> or <b>Sign In 👋</b> command.
-If you don't do this, some commands will be <b>unavailable</b> 🔴
+🔧 Запчастини — двигун, ходова, гальмівна система, електрика
+🛢️ Витратні матеріали — масла, фільтри, свічки, ланцюги
+🎽 Екіпіровка та аксесуари — шоломи, рукавиці, чохли, багажні системи
+🏍️ Комплектуючі як для популярних марок, так і рідкісних моделей
 
-We’re glad you’re using this bot ❤️
+Все — в наявності або під замовлення, з оригінальними та якісними неоригінальними варіантами на вибір.
 """
 
 
@@ -132,9 +130,9 @@ async def cmd_help_admin(message: types.Message):
 
 def default_handlers_register():
     dp.register_message_handler(cmd_start, commands='start')
-    dp.register_message_handler(cmd_help, Text(equals='Допомога ⭐️'))
+    dp.register_message_handler(cmd_help, Text(equals='Головне меню 🏠'))
     dp.register_message_handler(cmd_description, Text(equals='Про нас 📌'))
     dp.register_message_handler(send_all, Text(contains='Broadcast:'))
     dp.register_message_handler(cmd_admin, Text(equals='Адмін 👑'))
     dp.register_message_handler(cmd_home, Text(equals='Головне меню 🏠'))
-    dp.register_message_handler(cmd_help_admin, Text(equals='Help 🔔'))
+    dp.register_message_handler(cmd_help_admin, Text(equals='Допомога 🔔'))
