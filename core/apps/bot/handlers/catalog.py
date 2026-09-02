@@ -102,6 +102,6 @@ def category_exists():
 
 
 def catalog_handlers_register():
-    dp.register_message_handler(show_categories, Text(equals='Catalog 🛒'))
+    dp.register_message_handler(show_categories, Text(equals='Каталог 🛒'))
     dp.register_callback_query_handler(show_subcategories, category_cb.filter(action='view_categories'))
     dp.register_callback_query_handler(show_products, subcategory_cb.filter(action='view_subcategories'))
