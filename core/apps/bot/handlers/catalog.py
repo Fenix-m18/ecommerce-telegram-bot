@@ -61,12 +61,12 @@ for product in products:
             chat_id=query.message.chat.id, 
             text=text
         )
-    else:
-        await bot.send_message(
-            query.message.chat.id,
-            text="Unfortunately, there are no products in this subcategory 🙁",
-            reply_markup=markup,
-        )
+else:
+    await bot.send_message(
+        query.message.chat.id,
+        text="Unfortunately, there are no products in this subcategory 🙁",
+        reply_markup=markup,
+    )
 
 
 async def show_subcategories(query: types.CallbackQuery):
