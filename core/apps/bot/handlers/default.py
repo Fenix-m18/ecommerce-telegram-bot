@@ -132,9 +132,9 @@ async def cmd_help_admin(message: types.Message):
 
 def default_handlers_register():
     dp.register_message_handler(cmd_start, commands='start')
-    dp.register_message_handler(cmd_help, Text(equals='Help ⭐️'))
-    dp.register_message_handler(cmd_description, Text(equals='Description 📌'))
+    dp.register_message_handler(cmd_help, Text(equals='Допомога ⭐️'))
+    dp.register_message_handler(cmd_description, Text(equals='Про нас 📌'))
     dp.register_message_handler(send_all, Text(contains='Broadcast:'))
-    dp.register_message_handler(cmd_admin, Text(equals='Admin 👑'))
-    dp.register_message_handler(cmd_home, Text(equals='Home 🏠'))
+    dp.register_message_handler(cmd_admin, Text(equals='Адмін 👑'))
+    dp.register_message_handler(cmd_home, Text(equals='Головне меню 🏠'))
     dp.register_message_handler(cmd_help_admin, Text(equals='Help 🔔'))
